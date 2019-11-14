@@ -1,0 +1,36 @@
+/* You can add global styles to this file, and also import other style files */
+@import "assets/vendors/base/vendors.bundle.css";
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~material-design-icons/iconfont/material-icons.css";
+@import "~highlight.js/styles/googlecode.css";
+
+
+body .cdk-overlay-container {
+	z-index:1127;
+}
+
+kt-portlet .kt-portlet .kt-portlet__body {
+	padding: 0px;
+}
+
+.kt-widget4 > kt-widget-day:first-child > .kt-widget4__item {
+	margin-top: 15px;
+}
+
+.mat-form-field-type-mat-select mat-icon,
+kt-widget-activity-icon mat-icon {
+	vertical-align: text-top;
+}
+
+kt-widget-day:hover {
+	cursor: pointer;
+}
+
+kt-widget-day:hover > .kt-widget4__item {
+	background: #cfd7ff !important;
+}
+
+mat-chip {
+	padding: 1px 4px;
+	border-radius: 4px;
+}

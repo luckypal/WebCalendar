@@ -1,0 +1,33 @@
+<!-- begin:: Header Topbar -->
+<div class="kt-header__topbar">
+	<div class="kt-header__topbar-item" data-placement="bottom" [ngbTooltip]="historyService.isAbleToBack() ? 'Undo' : ''" (click)="onBtnUndo()" [ngStyle]="getBtnUndoStyle()">
+		<span class="kt-header__topbar-icon">
+			<span class="kt-svg-icon" [inlineSVG]="'./assets/media/icons/svg/Navigation/Left-2.svg'"></span>
+		</span>
+	</div>
+	
+	<div class="kt-header__topbar-item" data-placement="bottom" [ngbTooltip]="historyService.isAbleToForward() ? 'Redo' : ''" (click)="onBtnRedo()" [ngStyle]="getBtnRedoStyle()">
+		<span class="kt-header__topbar-icon">
+			<span class="kt-svg-icon" [inlineSVG]="'./assets/media/icons/svg/Navigation/Right-2.svg'"></span>
+		</span>
+	</div>
+	
+	<div class="kt-header__topbar-item" data-placement="bottom" ngbTooltip="Publish" (click)="onBtnPublish()">
+		<span class="kt-header__topbar-icon">
+			<span class="kt-svg-icon" [inlineSVG]="'./assets/media/icons/svg/Files/Upload.svg'"></span>
+		</span>
+	</div>
+	
+	<div class="kt-header__topbar-item" data-placement="bottom" ngbTooltip="Help" (click)="onBtnHelp()">
+		<span class="kt-header__topbar-icon">
+			<span class="kt-svg-icon" [inlineSVG]="'./assets/media/icons/svg/Code/Question-circle.svg'"></span>
+		</span>
+	</div>
+	<!--begin: Language bar -->
+	<kt-language-selector></kt-language-selector>
+	<!--end: Language bar -->
+	<!--begin: User bar -->
+	<kt-user-profile></kt-user-profile>
+	<!--end: User bar -->
+</div>
+<!-- end:: Header Topbar -->

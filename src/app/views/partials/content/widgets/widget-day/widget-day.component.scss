@@ -1,0 +1,40 @@
+.kt-widget4__item .kt-widget4__info {
+  padding-right: 0;
+}
+.kt-widget4__item .kt-widget4__icon {
+  width: 40px;
+}
+
+.kt-widget4__item .kt-widget4__info .kt-widget4__text {
+  text-align: right;
+}
+
+.kt-widget4__item {
+  position: relative;
+  padding-top: 0.1em;
+  padding-bottom: 0.1em;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.kt-portlet .kt-portlet__body {
+  padding: 1em;
+}
+
+.kt-widget4__text{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+kt-widget-dayactivity {
+  position: absolute;
+}
+
+.kt-widget4__info mat-chip {
+  position: absolute;
+  background-color: #5867ddc2;
+  right: 0;
+  padding: 1px;
+  padding-left: 4px;
+  padding-right: 4px;
+}

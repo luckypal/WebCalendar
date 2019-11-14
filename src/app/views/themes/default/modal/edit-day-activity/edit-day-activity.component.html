@@ -1,0 +1,65 @@
+<div class="modal-header">
+  <h4 class="modal-title">
+    Modification du
+    {{dayService.dayNames [getDayData().dayOfWeek]}}
+    {{getDayData().day + 1}}
+    {{monthService.monthNames [getDayData().month]}}
+    {{calendarService.year}}
+  </h4>
+  <button type="button" class="close" aria-label="Close" (click)="onClose()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-12">
+      <div *ngFor="let item of activityService.getActiveConfigs(); let actIndex = index">
+        <mat-checkbox [color]="'primary'" [disabled]="isDelay || isCancel" [(ngModel)]="activities [actIndex]">
+          <kt-widget-activity-icon [activityIndex]="item.index"></kt-widget-activity-icon>
+          Collecte de {{item.name}}
+        </mat-checkbox>
+      </div>
+    </div>
+
+    <div class="col-12" *ngIf="isConflit()">
+      <hr />
+      <ngb-alert [dismissible]="false" [type]="'danger'">
+        Jour férié : {{getDayData().dayName}}
+      </ngb-alert>
+    </div>
+
+    <div class="col-12">
+      <hr />
+      <p class="kt-section__sub"><strong>Reportée ou annulée l'évenement :</strong></p>
+      
+      <div class="row">
+        <div class="col-6">
+          <div>
+            <mat-checkbox [color]="'warn'" [(ngModel)]="isDelay" (change)="onChangeDelayCheck()">
+              <mat-chip color="warn" selected="true">Reportée / Avancée</mat-chip>
+            </mat-checkbox>
+          </div>
+
+          <div>
+            <mat-form-field>
+              <input matInput [matDatepicker]="delayPicker" placeholder="" [(ngModel)]="delayDate" [disabled]="!isDelay">
+              <mat-datepicker-toggle matSuffix [for]="delayPicker"></mat-datepicker-toggle>
+              <mat-datepicker #delayPicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+        
+        <div class="col-6">
+          <mat-checkbox [color]="'accent'" [(ngModel)]="isCancel" (change)="onChangeCancelCheck()">
+            <mat-chip color="accent" selected="true">Annulée</mat-chip>
+          </mat-checkbox>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="onClose()">Close</button>
+  <button type="button" class="btn btn-primary" (click)="onBtnOk()">Ok</button>
+  <button type="button" class="btn btn-primary" (click)="onSetWorking()">Collecter quand même</button>
+</div>

@@ -1,0 +1,73 @@
+<div class="modal-header">
+  <h4 class="modal-title">Gestion des évenements</h4>
+  <button type="button" class="close" aria-label="Close" (click)="onClose()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <mat-form-field appearance="legacy" class="col-lg-6 col-md-12">
+      <mat-select placeholder="" [(ngModel)]="activityService.default">
+        <mat-option *ngFor="let item of activityService.activityTypes; let i = index" [value]="i">
+          &nbsp; {{item.name}}
+        </mat-option>
+      </mat-select>
+      <mat-icon matPrefix>{{activityService.getDefaultType().icon}}</mat-icon>
+      <mat-hint>Select one activity</mat-hint>
+    </mat-form-field>
+
+    <div class="col-lg-6 col-md-12">
+      <button mat-raised-button color="primary" (click)="changeAllIcons()">Changer l'icône de tous les évenements</button>
+    </div>
+    
+    <hr />
+
+    <ng-container *ngFor="let activityItem of activityService.configuration; let actIndex = index">
+      <ng-container [ngTemplateOutlet]="activityTemplate" [ngTemplateOutletContext]="{activityItem: activityItem, actIndex: actIndex}"></ng-container>
+    </ng-container>
+  </div>
+</div>
+
+<ng-template #activityTemplate let-activityItem="activityItem" let-actIndex="actIndex">
+  <div class="col-lg-6 col-md-12">
+    <div class="row">
+      <div class="col-12">
+        <h3>
+          <mat-slide-toggle
+            [(ngModel)]="activityItem.isActive"
+            (change)="updateUI()"
+          ></mat-slide-toggle>
+          Evenement n°{{actIndex + 1}}:
+        </h3>
+      </div>
+
+      <mat-form-field appearance="legacy" class="col-12">
+        <mat-select placeholder="" [(ngModel)]="activityItem.type" (selectionChange)="updateUI()">
+          <mat-option *ngFor="let item of activityService.activityTypes; let i = index" [value]="i">
+            &nbsp; {{item.name}}
+          </mat-option>
+        </mat-select>
+        <mat-icon matPrefix [ngStyle]="{'color': activityItem.color}">{{activityService.activityTypes [ activityItem.type ].icon}}</mat-icon>
+        <mat-hint>Select one activity</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field class="col-12 mt-3">
+        <input matInput placeholder="Nom" [(ngModel)]="activityItem.name">
+      </mat-form-field>
+
+      <mat-form-field class="col-12 mt-3">
+        <input type="color" matInput placeholder="Couleur" [(ngModel)]="activityItem.color" (input)="updateUI()">
+      </mat-form-field>
+      
+      <div class="col-12">
+        <mat-icon matPrefix class="activity-icon" [ngStyle]="{'color': activityItem.color}">{{activityService.activityTypes [ activityItem.type ].icon}}</mat-icon>
+      </div>
+      
+      <mat-form-field class="col-12">
+        <textarea matInput placeholder="Description" rows="5" [(ngModel)]="activityItem.description"></textarea>
+      </mat-form-field>
+    </div>
+    
+    <hr />
+  </div>
+</ng-template>

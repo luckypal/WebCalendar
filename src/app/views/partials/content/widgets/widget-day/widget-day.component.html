@@ -1,0 +1,14 @@
+<div class="kt-widget4__item" [ngStyle]="getStyle()" (click)="onEditDay()">
+  <h4 class="kt-widget4__icon">{{day + 1}}</h4>
+
+  <div class="kt-widget4__info">
+    <span class="kt-widget4__username">{{dayService.getDayName(dayData.dayOfWeek).substr(0, 3)}}</span>
+    
+    <kt-widget-dayactivity *ngFor="let activityIndex of activities" [activityIndex]="activityIndex" [dayData]="dayData"></kt-widget-dayactivity>
+
+    <mat-chip color="warn" selected="true" *ngIf="dayData.conflitsProp == 1">Reportée</mat-chip>
+    <mat-chip color="accent" selected="true" *ngIf="dayData.conflitsProp == 2">Annulée</mat-chip>
+
+    <p class="kt-widget4__text">{{dayData.dayName}}</p>
+  </div>
+</div>

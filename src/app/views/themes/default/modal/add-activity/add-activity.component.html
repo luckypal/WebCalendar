@@ -1,0 +1,41 @@
+<div class="modal-header">
+  <h4 class="modal-title">Add Activity</h4>
+  <button type="button" class="close" aria-label="Close" (click)="onClose()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <mat-form-field class="col-md-6">
+      <input matInput [matDatepicker]="fromPicker" placeholder="From Date" [(ngModel)]="startDate">
+      <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+      <mat-datepicker #fromPicker></mat-datepicker>
+      <mat-hint>Premier jour de la collecte</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field class="col-md-6">
+      <input matInput [matDatepicker]="lastPicker" placeholder="Last Date" [(ngModel)]="lastDate">
+      <mat-datepicker-toggle matSuffix [for]="lastPicker"></mat-datepicker-toggle>
+      <mat-datepicker #lastPicker></mat-datepicker>
+      <mat-hint>Dernier jour de la collecte</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="legacy" class="col-md-12 mt-3">
+      <mat-select placeholder="Flux" [(ngModel)]="currentActivity">
+        <mat-option *ngFor="let item of activityService.getActiveConfigs()" [value]="item.index">{{item.name}}</mat-option>
+      </mat-select>
+      <mat-icon matPrefix [ngStyle]="{'color': getColor()}">{{getIcon()}}</mat-icon>
+      <mat-hint>Select one activity</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="legacy" class="col-md-12 mt-3">
+      <mat-select placeholder="Fréquence" [(ngModel)]="currentFrequence">
+        <mat-option *ngFor="let item of activityService.activityFrequences; let i = index" [value]="i">{{item}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="onClose()">Close</button>
+  <button type="button" class="btn btn-primary" (click)="onAddActivity()">Add Activity</button>
+</div>

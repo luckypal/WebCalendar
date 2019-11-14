@@ -1,0 +1,10 @@
+<kt-portlet [class]="'kt-portlet--height-fluid'">
+	<kt-portlet-header [title]="monthService.monthNames [month]"></kt-portlet-header>
+	<kt-portlet-body>
+		<div class="kt-widget4">
+			<ng-container *ngFor="let item of calendarService.dayData [month]; let i = index">
+				<kt-widget-day [month]="month" [day]="i"></kt-widget-day>
+			</ng-container>
+		</div>
+	</kt-portlet-body>
+</kt-portlet>
