@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { auth } from 'firebase/app';
+
 import { User } from '../_models/user.model';
 import { Permission } from '../_models/permission.model';
 import { Role } from '../_models/role.model';
@@ -15,20 +18,61 @@ const API_ROLES_URL = 'api/roles';
 
 @Injectable()
 export class AuthService {
-    constructor(private http: HttpClient) {}
+    constructor(
+        private http: HttpClient,
+        private afAuth: AngularFireAuth) { }
     // Authentication/Authorization
-    login(email: string, password: string): Observable<User> {
-        return this.http.post<User>(API_USERS_URL, { email, password });
+    // login(email: string, password: string): Observable<User> {
+    //     return this.http.post<User>(API_USERS_URL, { email, password });
+    // }
+    login(email: string, password: string): Promise<auth.UserCredential> {
+        return this.afAuth.auth.signInWithEmailAndPassword(email, password);
     }
 
     getUserByToken(): Observable<User> {
         const userToken = localStorage.getItem(environment.authTokenKey);
-        const httpHeaders = new HttpHeaders();
-        httpHeaders.append('Authorization', 'Bearer ' + userToken);
-        return this.http.get<User>(API_USERS_URL, { headers: httpHeaders });
+
+        return new Observable<User>(observer => {
+            this.afAuth.auth.onAuthStateChanged(async () => {
+                var user: User = new User();
+                var { currentUser } = this.afAuth.auth;
+                var { displayName, email, photoURL, phoneNumber } = currentUser;
+                
+                user.fullname = displayName ? displayName : email;
+                user.email = email;
+                user.pic = photoURL;
+                user.phone = phoneNumber;
+                user.accessToken = await currentUser.getIdToken();
+
+                observer.next(user);
+                observer.complete()
+            })
+        })
+        // console.log("currentUser", this.afAuth.auth);
+        // const httpHeaders = new HttpHeaders();
+        // httpHeaders.append('Authorization', 'Bearer ' + userToken);
+        // return this.http.get<User>(API_USERS_URL, { headers: httpHeaders });
     }
 
-    register(user: User): Observable<any> {
+    loginWithGoogle() {
+        const provider = new auth.GoogleAuthProvider();
+        return this.afAuth.auth.signInWithPopup(provider);
+    }
+
+    loginWithFacebook() {
+        const provider = new auth.FacebookAuthProvider();
+        return this.afAuth.auth.signInWithPopup(provider);
+    }
+
+    logout() {
+        this.afAuth.auth.signOut()
+            .then(() => {});
+    }
+
+    register(user: User) {
+        return this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password);
+    }
+    /*register(user: User): Observable<any> {
         const httpHeaders = new HttpHeaders();
         httpHeaders.set('Content-Type', 'application/json');
         return this.http.post<User>(API_USERS_URL, user, { headers: httpHeaders })
@@ -40,7 +84,7 @@ export class AuthService {
                     return null;
                 })
             );
-    }
+    }*/
 
     /*
      * Submit forgot password request
@@ -48,53 +92,56 @@ export class AuthService {
      * @param {string} email
      * @returns {Observable<any>}
      */
-    public requestPassword(email: string): Observable<any> {
-    	return this.http.get(API_USERS_URL + '/forgot?=' + email)
-    		.pipe(catchError(this.handleError('forgot-password', []))
-	    );
+    /*public requestPassword(email: string): Observable<any> {
+        return this.http.get(API_USERS_URL + '/forgot?=' + email)
+            .pipe(catchError(this.handleError('forgot-password', []))
+            );
+    }*/
+    public requestPassword(email: string): Promise<any> {
+        return this.afAuth.auth.sendPasswordResetEmail(email);
     }
 
 
     getAllUsers(): Observable<User[]> {
-		return this.http.get<User[]>(API_USERS_URL);
+        return this.http.get<User[]>(API_USERS_URL);
     }
 
     getUserById(userId: number): Observable<User> {
-		return this.http.get<User>(API_USERS_URL + `/${userId}`);
-	}
+        return this.http.get<User>(API_USERS_URL + `/${userId}`);
+    }
 
 
     // DELETE => delete the user from the server
-	deleteUser(userId: number) {
-		const url = `${API_USERS_URL}/${userId}`;
-		return this.http.delete(url);
+    deleteUser(userId: number) {
+        const url = `${API_USERS_URL}/${userId}`;
+        return this.http.delete(url);
     }
 
     // UPDATE => PUT: update the user on the server
-	updateUser(_user: User): Observable<any> {
+    updateUser(_user: User): Observable<any> {
         const httpHeaders = new HttpHeaders();
         httpHeaders.set('Content-Type', 'application/json');
-		return this.http.put(API_USERS_URL, _user, { headers: httpHeaders });
-	}
+        return this.http.put(API_USERS_URL, _user, { headers: httpHeaders });
+    }
 
     // CREATE =>  POST: add a new user to the server
-	createUser(user: User): Observable<User> {
-    	const httpHeaders = new HttpHeaders();
-        httpHeaders.set('Content-Type', 'application/json');
-		return this.http.post<User>(API_USERS_URL, user, { headers: httpHeaders});
-	}
-
-    // Method from server should return QueryResultsModel(items: any[], totalsCount: number)
-	// items => filtered/sorted result
-	findUsers(queryParams: QueryParamsModel): Observable<QueryResultsModel> {
+    createUser(user: User): Observable<User> {
         const httpHeaders = new HttpHeaders();
         httpHeaders.set('Content-Type', 'application/json');
-		return this.http.post<QueryResultsModel>(API_USERS_URL + '/findUsers', queryParams, { headers: httpHeaders});
+        return this.http.post<User>(API_USERS_URL, user, { headers: httpHeaders });
+    }
+
+    // Method from server should return QueryResultsModel(items: any[], totalsCount: number)
+    // items => filtered/sorted result
+    findUsers(queryParams: QueryParamsModel): Observable<QueryResultsModel> {
+        const httpHeaders = new HttpHeaders();
+        httpHeaders.set('Content-Type', 'application/json');
+        return this.http.post<QueryResultsModel>(API_USERS_URL + '/findUsers', queryParams, { headers: httpHeaders });
     }
 
     // Permission
     getAllPermissions(): Observable<Permission[]> {
-		return this.http.get<Permission[]>(API_PERMISSION_URL);
+        return this.http.get<Permission[]>(API_PERMISSION_URL);
     }
 
     getRolePermissions(roleId: number): Observable<Permission[]> {
@@ -107,29 +154,29 @@ export class AuthService {
     }
 
     getRoleById(roleId: number): Observable<Role> {
-		return this.http.get<Role>(API_ROLES_URL + `/${roleId}`);
+        return this.http.get<Role>(API_ROLES_URL + `/${roleId}`);
     }
 
     // CREATE =>  POST: add a new role to the server
-	createRole(role: Role): Observable<Role> {
-		// Note: Add headers if needed (tokens/bearer)
+    createRole(role: Role): Observable<Role> {
+        // Note: Add headers if needed (tokens/bearer)
         const httpHeaders = new HttpHeaders();
         httpHeaders.set('Content-Type', 'application/json');
-		return this.http.post<Role>(API_ROLES_URL, role, { headers: httpHeaders});
-	}
+        return this.http.post<Role>(API_ROLES_URL, role, { headers: httpHeaders });
+    }
 
     // UPDATE => PUT: update the role on the server
-	updateRole(role: Role): Observable<any> {
+    updateRole(role: Role): Observable<any> {
         const httpHeaders = new HttpHeaders();
         httpHeaders.set('Content-Type', 'application/json');
-		return this.http.put(API_ROLES_URL, role, { headers: httpHeaders });
-	}
+        return this.http.put(API_ROLES_URL, role, { headers: httpHeaders });
+    }
 
-	// DELETE => delete the role from the server
-	deleteRole(roleId: number): Observable<Role> {
-		const url = `${API_ROLES_URL}/${roleId}`;
-		return this.http.delete<Role>(url);
-	}
+    // DELETE => delete the role from the server
+    deleteRole(roleId: number): Observable<Role> {
+        const url = `${API_ROLES_URL}/${roleId}`;
+        return this.http.delete<Role>(url);
+    }
 
     // Check Role Before deletion
     isRoleAssignedToUsers(roleId: number): Observable<boolean> {
@@ -140,16 +187,16 @@ export class AuthService {
         // This code imitates server calls
         const httpHeaders = new HttpHeaders();
         httpHeaders.set('Content-Type', 'application/json');
-		return this.http.post<QueryResultsModel>(API_ROLES_URL + '/findRoles', queryParams, { headers: httpHeaders});
-	}
+        return this.http.post<QueryResultsModel>(API_ROLES_URL + '/findRoles', queryParams, { headers: httpHeaders });
+    }
 
- 	/*
- 	 * Handle Http operation that failed.
- 	 * Let the app continue.
-     *
-	 * @param operation - name of the operation that failed
- 	 * @param result - optional value to return as the observable result
- 	 */
+    /*
+     * Handle Http operation that failed.
+     * Let the app continue.
+   *
+   * @param operation - name of the operation that failed
+     * @param result - optional value to return as the observable result
+     */
     private handleError<T>(operation = 'operation', result?: any) {
         return (error: any): Observable<any> => {
             // TODO: send the error to remote logging infrastructure

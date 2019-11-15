@@ -5,27 +5,31 @@
 		<span class="kt-subheader__separator kt-subheader__separator--v"></span>
 		<!--<h4 *ngIf="desc" class="kt-subheader__desc">{{desc}}</h4>-->
 		<!-- <h4 class="kt-subheader__desc">#XRS-45670</h4> -->
-		<a href="javascript:;" class="btn btn-label-primary btn-bold btn-sm btn-icon-h kt-margin-l-10">
+		<!-- <a href="javascript:;" class="btn btn-label-primary btn-bold btn-sm btn-icon-h kt-margin-l-10">
 			<i class="kt-menu__link-icon flaticon-file-2"></i> Open / Save
-		</a>
+		</a> -->
 		
-		<a href="javascript:;" class="btn btn-label-warning btn-bold btn-sm btn-icon-h kt-margin-l-10">
+		<a href="javascript:;" class="btn btn-label-primary btn-bold btn-sm btn-icon-h kt-margin-l-10" (click)="onBtnMonthView()">
 			<i class="kt-menu__link-icon flaticon2-calendar-2"></i> Month View
 		</a>
 		
-		<a href="javascript:;" class="btn btn-label-warning btn-bold btn-sm btn-icon-h kt-margin-l-10">
+		<a href="javascript:;" class="btn btn-label-primary btn-bold btn-sm btn-icon-h kt-margin-l-10" (click)="onBtnDayView()">
 			<i class="kt-menu__link-icon flaticon2-calendar-4"></i> Days View
 		</a>
 		
-		<a href="javascript:;" class="btn btn-label-danger btn-bold btn-sm btn-icon-h kt-margin-l-10">
-			<i class="kt-menu__link-icon flaticon-time"></i> Flow Display
+		<a href="javascript:;" class="btn btn-label-danger btn-bold btn-sm btn-icon-h kt-margin-l-10" (click)="onBtnActivityModal()">
+			<i class="kt-menu__link-icon flaticon-time"></i> Activity View
 		</a>
 		
-		<a href="javascript:;" class="btn btn-label-success btn-bold btn-sm btn-icon-h kt-margin-l-10">
+		<!-- <a href="javascript:;" class="btn btn-label-success btn-bold btn-sm btn-icon-h kt-margin-l-10">
 			<i class="kt-menu__link-icon flaticon-tea-cup"></i> Showing Vacations
+		</a> -->
+		
+		<a href="javascript:;" class="btn btn-label-success btn-bold btn-sm btn-icon-h kt-margin-l-10" (click)="onBtnTitleDisplayModal()">
+			<i class="kt-menu__link-icon flaticon2-open-text-book" ></i> Title Display
 		</a>
 		
-		<a href="javascript:;" class="btn btn-label-info btn-bold btn-sm btn-icon-h kt-margin-l-10">
+		<a href="javascript:;" class="btn btn-label-warning btn-bold btn-sm btn-icon-h kt-margin-l-10" (click)="onBtnBackgroundModal()">
 			<i class="kt-menu__link-icon flaticon-background"></i> Calendar Background
 		</a>
 	</div>

@@ -1,0 +1,121 @@
+<div class="modal-header">
+  <h4 class="modal-title">Days View</h4>
+  <button type="button" class="close" aria-label="Close" (click)="onClose()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <mat-slide-toggle class="col-12" [(ngModel)]="uiService.day.isBoldDayNumber" (change)="updateUI()">
+      Numbers of days in <b>bold</b>
+    </mat-slide-toggle>
+
+    <div class="col-12">
+      <hr />
+    </div>
+
+    <mat-slide-toggle class="col-6" [(ngModel)]="uiService.day.isDayBold" (change)="updateUI()">
+      Days in <b>bold</b>
+    </mat-slide-toggle>
+
+    <mat-form-field class="col-6">
+      <input matInput type="number" placeholder="Number of letters" [(ngModel)]="uiService.day.dayLetterNumber" (change)="updateUI()">
+    </mat-form-field>
+
+    <div class="col-12">
+      <hr />
+    </div>
+
+    <div class="col-sm-6 col-md-4">
+      <mat-slide-toggle [(ngModel)]="uiService.day.isShowWeeklyNumber" (change)="updateUI()">
+        Weekly numbers
+      </mat-slide-toggle>
+
+      <mat-slide-toggle [(ngModel)]="uiService.day.isBoldWeeklyNumber" (change)="updateUI()" [disabled]="!uiService.day.isShowWeeklyNumber">
+        Weekly numbers in Bold
+      </mat-slide-toggle>
+    </div>
+
+    <mat-form-field appearance="legacy" class="col-sm-6 col-md-4">
+      <mat-select placeholder="" [(ngModel)]="uiService.day.weeklyNumberOnDate" (selectionChange)="updateUI()" [disabled]="!uiService.day.isShowWeeklyNumber">
+        <mat-option *ngFor="let dayName of dayService.dayNames; let i = index" [value]="i">
+          &nbsp; On {{dayName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-slider class="col-sm-6 col-md-4" (change)="updateUI()" [(ngModel)]="uiService.day.positionWeeklyNumber" min="0"
+      max="100" step="1" [disabled]="!uiService.day.isShowWeeklyNumber"></mat-slider>
+
+    <div class="col-12">
+      <hr />
+    </div>
+
+    <mat-slide-toggle class="col-sm-6 col-md-3" [(ngModel)]="uiService.day.isShowDayName" (change)="updateUI()">
+      Day names
+    </mat-slide-toggle>
+
+    <mat-slide-toggle class="col-sm-6 col-md-3" [(ngModel)]="uiService.day.isBoldDayName" (change)="updateUI()">
+      In Bold
+    </mat-slide-toggle>
+
+    <mat-slide-toggle class="col-sm-6 col-md-3" [(ngModel)]="uiService.day.isOnlyShowHoliday" (change)="updateUI()">
+      Only Holidays
+    </mat-slide-toggle>
+
+    <mat-slider class="col-sm-6 col-md-3" [(ngModel)]="uiService.day.positionDayName" (change)="updateUI()" min="0"
+      max="100" step="1"></mat-slider>
+
+    <div class="col-12">
+      <hr />
+    </div>
+
+    <div class="col-sm-12 col-md-6">
+      <mat-chip class="col-6" color="warn" selected="true">Reportée / Avancée</mat-chip>
+      <mat-slider class="col-6" [(ngModel)]="uiService.day.delayedPosition" (change)="updateUI()" min="0" max="100" step="1">
+      </mat-slider>
+    </div>
+
+    <div class="col-sm-12 col-md-6">
+      <mat-chip class="col-6" color="accent" selected="true">Annulée</mat-chip>
+      <mat-slider class="col-6" [(ngModel)]="uiService.day.canceledPosition" (change)="updateUI()" min="0" max="100" step="1">
+      </mat-slider>
+    </div>
+
+    <div class="col-12">
+      <hr />
+    </div>
+
+    <mat-form-field class="col-12 col-md-4">
+      <input type="color" matInput placeholder="Sunday Color:" [(ngModel)]="uiService.day.sundayColor"
+        (input)="updateUI()">
+    </mat-form-field>
+
+    <mat-form-field class="col-12 col-md-4">
+      <input type="color" matInput placeholder="Holiday Color:" [(ngModel)]="uiService.day.holidayColor"
+        (input)="updateUI()">
+    </mat-form-field>
+
+    <mat-form-field class="col-12 col-md-4">
+      <input type="color" matInput placeholder="Normal day Color:" [(ngModel)]="uiService.day.normalColor"
+        (input)="updateUI()">
+    </mat-form-field>
+
+    <div class="col-12">
+      <hr />
+    </div>
+    
+    <mat-slide-toggle class="col-sm-6" [(ngModel)]="uiService.day.isHorzBorder" (change)="updateUI()">
+      Horizontal borders
+    </mat-slide-toggle>
+    
+    <mat-slide-toggle class="col-sm-6" [(ngModel)]="uiService.day.isVertBorder" (change)="updateUI()">
+      Vertical borders
+    </mat-slide-toggle>
+
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" (click)="onReset()">Reset</button>
+  <!-- <button type="button" class="btn btn-primary" (click)="onCenterCalendar()">Center the calendar</button> -->
+</div>

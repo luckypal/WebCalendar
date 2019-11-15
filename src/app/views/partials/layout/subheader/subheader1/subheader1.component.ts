@@ -6,6 +6,12 @@ import { Subscription } from 'rxjs';
 import { SubheaderService } from '../../../../../core/_base/layout';
 import { Breadcrumb } from '../../../../../core/_base/layout/services/subheader.service';
 import { CalendarService } from '../../../../../core/services/calendar.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MonthViewComponent } from '../../../../themes/default/modal/month-view/month-view.component';
+import { DayModalComponent } from '../../../../themes/default/modal/day-modal/day-modal.component';
+import { ActivityUIModalComponent } from '../../../../themes/default/modal/activity-uimodal/activity-uimodal.component';
+import { BackgroundUIModalComponent } from '../../../../themes/default/modal/background-uimodal/background-uimodal.component';
+import { TitleDisplayModalComponent } from '../../../../themes/default/modal/title-display-modal/title-display-modal.component';
 
 @Component({
 	selector: 'kt-subheader1',
@@ -19,9 +25,9 @@ export class Subheader1Component implements OnInit, OnDestroy, AfterViewInit {
 	desc: string = '';
 	breadcrumbs: Breadcrumb[] = [];
 
-	// Private properties
-	private subscriptions: Subscription[] = [];
-	private calendarSubscription: Subscription;
+	// Public properties
+	public subscriptions: Subscription[] = [];
+	public calendarSubscription: Subscription;
 
 	/**
 	 * Component constructor
@@ -30,8 +36,9 @@ export class Subheader1Component implements OnInit, OnDestroy, AfterViewInit {
 	 */
 	constructor(
 		public subheaderService: SubheaderService,
-		private calendarService: CalendarService,
-		private ref: ChangeDetectorRef) {
+		public calendarService: CalendarService,
+		public modalService: NgbModal,
+		public ref: ChangeDetectorRef) {
 	}
 
 	/**
@@ -79,5 +86,34 @@ export class Subheader1Component implements OnInit, OnDestroy, AfterViewInit {
 	onSetViewMode(viewMode) {
 		this.calendarService.pageViewMode = viewMode;
 		this.calendarService.changeEvent.emit(true);
+	}
+
+	onBtnMonthView() {
+		this.modalService.open(MonthViewComponent, {
+			size: 'lg'
+		});
+	}
+
+	onBtnDayView() {
+		this.modalService.open(DayModalComponent, {
+			size: 'lg'
+		});
+	}
+
+	onBtnActivityModal() {
+		this.modalService.open(ActivityUIModalComponent, {
+			size: 'lg'
+		});
+	}
+
+	onBtnBackgroundModal() {
+		this.modalService.open(BackgroundUIModalComponent, {
+			size: 'lg'
+		});
+	}
+	onBtnTitleDisplayModal() {
+		this.modalService.open(TitleDisplayModalComponent, {
+			size: 'lg'
+		});
 	}
 }

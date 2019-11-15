@@ -143,7 +143,26 @@ export class RegisterComponent implements OnInit, OnDestroy {
 		_user.fullname = controls['fullname'].value;
 		_user.password = controls['password'].value;
 		_user.roles = [];
-		this.auth.register(_user).pipe(
+		this.auth.register(_user)
+			.then(async (credential) => {
+				var token = await credential.user.getIdToken();
+				this.store.dispatch(new Register({authToken: token}));
+				this.authNoticeService.setNotice(this.translate.instant('AUTH.REGISTER.SUCCESS'), 'success');
+				this.router.navigateByUrl('/auth/login');
+				
+				this.loading = false;
+				this.cdr.detectChanges();
+			})
+			.catch(error => {
+				console.log("error", error);
+				if (error.message)
+					this.authNoticeService.setNotice(error.message, 'danger');
+				else this.authNoticeService.setNotice(this.translate.instant('AUTH.VALIDATION.INVALID_LOGIN'), 'danger');
+
+				this.loading = false;
+				this.cdr.detectChanges();
+			})
+		/*this.auth.register(_user).pipe(
 			tap(user => {
 				if (user) {
 					this.store.dispatch(new Register({authToken: user.accessToken}));
@@ -159,7 +178,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 				this.loading = false;
 				this.cdr.detectChanges();
 			})
-		).subscribe();
+		).subscribe();*/
 	}
 
 	/**

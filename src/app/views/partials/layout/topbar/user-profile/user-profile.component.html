@@ -11,21 +11,21 @@
 		<!--begin: Head -->
 		<div class="kt-user-card kt-user-card--skin-dark kt-notification-item-padding-x" style="background-image: url(./assets/media/misc/bg-1.jpg)">
 			<div class="kt-user-card__avatar">
-				<img alt="Pic" [attr.src]="_user.pic"/>
-				<span [hidden]="true" class="kt-badge kt-badge--lg kt-badge--rounded kt-badge--bold kt-font-success">{{_user.fullname|firstLetter}}</span>
+				<img [hidden]="_user.pic == null" alt="Pic" [attr.src]="_user.pic"/>
+				<span [hidden]="_user.pic != null" class="kt-badge kt-badge--lg kt-badge--rounded kt-badge--bold kt-font-success">{{_user.fullname|firstLetter}}</span>
 			</div>
 			<div class="kt-user-card__name">
 				{{_user.fullname}}
 			</div>
-			<div class="kt-user-card__badge">
+			<!-- <div class="kt-user-card__badge">
 				<span class="btn btn-success btn-sm btn-bold btn-font-md">23 messages</span>
-			</div>
+			</div> -->
 		</div>
 		<!--end: Head -->
 
 		<!--begin: Navigation -->
 		<div class="kt-notification">
-			<a routerLink="profile" href="javascript:;" class="kt-notification__item">
+		<!-- 	<a routerLink="profile" href="javascript:;" class="kt-notification__item">
 				<div class="kt-notification__item-icon">
 					<i class="flaticon2-calendar-3 kt-font-success"></i>
 				</div>
@@ -76,7 +76,7 @@
 						latest tasks and projects
 					</div>
 				</div>
-			</a>
+			</a> -->
 			<div class="kt-notification__custom">
 				<a href="javascript:;" (click)="logout()" class="btn btn-outline-brand btn-upper btn-sm btn-bold">Sign Out</a>
 			</div>

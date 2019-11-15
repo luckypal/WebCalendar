@@ -12,13 +12,14 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../../../core/reducers';
 // Auth
 import { AuthNoticeService, AuthService, Login } from '../../../../core/auth';
+import { auth } from 'firebase';
 
 /**
  * ! Just example => Should be removed in development
  */
 const DEMO_PARAMS = {
 	EMAIL: 'admin@demo.com',
-	PASSWORD: 'demo'
+	PASSWORD: 'demo123'
 };
 
 @Component({
@@ -94,17 +95,17 @@ export class LoginComponent implements OnInit, OnDestroy {
 
 		this.loginForm = this.fb.group({
 			email: [DEMO_PARAMS.EMAIL, Validators.compose([
-				Validators.required,
-				Validators.email,
-				Validators.minLength(3),
-				Validators.maxLength(320) // https://stackoverflow.com/questions/386294/what-is-the-maximum-length-of-a-valid-email-address
-			])
+					Validators.required,
+					Validators.email,
+					Validators.minLength(3),
+					Validators.maxLength(320) // https://stackoverflow.com/questions/386294/what-is-the-maximum-length-of-a-valid-email-address
+				])
 			],
 			password: [DEMO_PARAMS.PASSWORD, Validators.compose([
-				Validators.required,
-				Validators.minLength(3),
-				Validators.maxLength(100)
-			])
+					Validators.required,
+					Validators.minLength(3),
+					Validators.maxLength(100)
+				])
 			]
 		});
 	}
@@ -128,9 +129,9 @@ export class LoginComponent implements OnInit, OnDestroy {
 			email: controls['email'].value,
 			password: controls['password'].value
 		};
-		this.auth
-			.login(authData.email, authData.password)
-			.pipe(
+		var promise = this.auth.login(authData.email, authData.password);
+		this.afterLogin(promise);
+/*			.pipe(
 				tap(user => {
 					if (user) {
 						this.store.dispatch(new Login({authToken: user.accessToken}));
@@ -145,7 +146,26 @@ export class LoginComponent implements OnInit, OnDestroy {
 					this.cdr.detectChanges();
 				})
 			)
-			.subscribe();
+			.subscribe();*/
+	}
+
+	afterLogin(promise: Promise<auth.UserCredential>) {
+		promise.then(async (credential) => {
+			var token = await credential.user.getIdToken();
+			this.store.dispatch(new Login({authToken: token}));
+			// this.router.navigateByUrl('/default/dashboard'); // Main page
+			window.location.href = "/default/dashboard";
+
+			// this.loading = false;
+			// this.cdr.detectChanges();
+		})
+		.catch(error => {
+			if (error.message)
+				this.authNoticeService.setNotice(error.message, 'danger');
+
+			this.loading = false;
+			this.cdr.detectChanges();
+		})
 	}
 
 	/**
@@ -162,5 +182,17 @@ export class LoginComponent implements OnInit, OnDestroy {
 
 		const result = control.hasError(validationType) && (control.dirty || control.touched);
 		return result;
+	}
+
+	onBtnFacebookSignin() {
+		this.loading = true;
+		var promise = this.auth.loginWithFacebook();
+		this.afterLogin(promise);
+	}
+
+	onBtnGoogleSignin() {
+		this.loading = true;
+		var promise = this.auth.loginWithGoogle();
+		this.afterLogin(promise);
 	}
 }

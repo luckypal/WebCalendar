@@ -15,7 +15,6 @@ export class PublishService {
   constructor(
     private calendarService: CalendarService
   ) {
-    console.log("ASDFDSF");
     window.addEventListener("resize", (e) => {
       var item = document.getElementsByClassName("kt-portlet").item(0);
       // console.log(item.clientWidth, item.clientHeight);

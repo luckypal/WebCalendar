@@ -14,6 +14,7 @@ import { HtmlClassService } from '../../html-class.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddActivityComponent } from '../../modal/add-activity/add-activity.component';
 import { ActivityConfComponent } from '../../modal/activity-conf/activity-conf.component';
+import { SaveModalComponent } from '../../modal/save-modal/save-modal.component';
 
 @Component({
 	selector: 'kt-menu-horizontal',
@@ -232,7 +233,9 @@ export class MenuHorizontalComponent implements OnInit, AfterViewInit {
 	}
 
 	onMenuOpenSave() {
-		alert("Open / Save");
+		this.modalService.open(SaveModalComponent, {
+			size: 'lg'
+		});
 	}
 
 	onMenuActivityManage() {

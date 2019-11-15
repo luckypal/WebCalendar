@@ -34,7 +34,7 @@ export class WidgetDayactivityComponent implements OnInit, OnDestroy {
 
   getStyle() {
     return {
-      'margin-left': `${this.activityService.configuration [this.activityIndex].marginLeft}px`,
+      // 'margin-left': `${this.activityService.configuration [this.activityIndex].marginLeft}px`,
       'opacity': this.dayData.conflitsProp == 1 || this.dayData.conflitsProp == 2 ? 0.2 : 1
     }
   }

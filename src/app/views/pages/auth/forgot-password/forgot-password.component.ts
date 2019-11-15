@@ -96,7 +96,21 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 		this.loading = true;
 
 		const email = controls['email'].value;
-		this.authService.requestPassword(email).pipe(
+		this.authService.requestPassword(email)
+		.then(() => {
+			this.authNoticeService.setNotice(this.translate.instant('AUTH.FORGOT.SUCCESS'), 'success');
+			this.router.navigateByUrl('/auth/login');
+			
+			this.loading = false;
+			this.cdr.detectChanges();
+		})
+		.catch((error) => {
+			console.log("ERROR", error);
+			this.authNoticeService.setNotice(this.translate.instant('AUTH.VALIDATION.NOT_FOUND', {name: this.translate.instant('AUTH.INPUT.EMAIL')}), 'danger');
+			this.loading = false;
+			this.cdr.detectChanges();
+		});
+		/*.pipe(
 			tap(response => {
 				if (response) {
 					this.authNoticeService.setNotice(this.translate.instant('AUTH.FORGOT.SUCCESS'), 'success');
@@ -110,7 +124,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 				this.loading = false;
 				this.cdr.detectChanges();
 			})
-		).subscribe();
+		).subscribe();*/
 	}
 
 	/**

@@ -9,6 +9,7 @@ export interface SaveOption {
 
 export interface DayData {
 	month: number;
+	weekNumber: number;
 	day: number;
 	dayOfWeek: number;
 	dayName: string;
@@ -44,6 +45,7 @@ export class CalendarService {
 
 	reset() {
 		this.year = new Date().getFullYear();
+		var weekNumber = 0;
 
 		for (var month = 0; month < this.monthService.monthNames.length; month++) {
 			var dayNums = this.monthService.daysInMonth(this.year, month);
@@ -55,6 +57,7 @@ export class CalendarService {
 
 				monthData.push({
 					month: month,
+					weekNumber: weekNumber,
 					day: i,
 					dayOfWeek,
 					dayName,
@@ -62,6 +65,9 @@ export class CalendarService {
 					activities: {},
 					conflitsProp: 0,
 				});
+
+				if (dayOfWeek == 5)
+					weekNumber ++;
 			}
 			this.dayData.push(monthData);
 		}

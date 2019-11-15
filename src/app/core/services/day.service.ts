@@ -7,8 +7,6 @@ import DayNames from '../../../data/day.json';
 
 export class DayService {
 
-  //	dayNames: string[] = ["L", "M", "M", "J", "V", "S", "D"];
-  holidayBackground: string[] = ["#fff", "#EEEEEE", "#EEEEEE"];
   holidayWarningBackground: string = "#FFCDD2";
   dayNames: string[] = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 

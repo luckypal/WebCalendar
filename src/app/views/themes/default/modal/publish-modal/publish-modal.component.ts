@@ -13,12 +13,12 @@ import { PublishService } from '../../../../../core/services/publish.service';
   styleUrls: ['./publish-modal.component.scss']
 })
 export class PublishModalComponent implements OnInit {
-  calendarName: string = "test";
-  publishType: number = 1;      //Image: 0, PDF: 1
+  calendarName: string = "";
+  publishType: number = 0;      //Image: 0, PDF: 1
 
   constructor(
-    private activityService: ActivityService,
-    private calendarService: CalendarService,
+    public activityService: ActivityService,
+    public calendarService: CalendarService,
     private publishService: PublishService,
     private modalService: NgbModal) { }
 

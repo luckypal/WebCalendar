@@ -14,7 +14,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
 	subscription: Subscription;
 
 	constructor(
-		private historyService: HistoryService,
+		public historyService: HistoryService,
 		private ref: ChangeDetectorRef,
 		private modalService: NgbModal) { }
 

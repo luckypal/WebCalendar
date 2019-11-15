@@ -26,7 +26,7 @@ export class LayoutConfig {
 		'loader': {
 			'enabled': true,
 			'type': 'spinner-logo',
-			'logo': './assets/media/logos/logo-mini-md.png',
+			'logo': './assets/media/logos/calendar.png',
 			'message': 'Please wait...'
 		},
 		// == Colors for javascript

@@ -25,6 +25,8 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 // State
 import { metaReducers, reducers } from './core/reducers';
 // Copmponents
@@ -37,6 +39,7 @@ import { PartialsModule } from './views/partials/partials.module';
 // Metronic Services
 import { DataTableService, FakeApiService } from './core/_base/metronic';
 // Layout Services
+
 import { LayoutConfigService, LayoutRefService, MenuAsideService, MenuConfigService, MenuHorizontalService, PageConfigService, SplashScreenService, SubheaderService,
 	KtDialogService } from './core/_base/layout';
 // Auth
@@ -84,6 +87,8 @@ export function hljsLanguages(): HighlightLanguage[] {
 	imports: [
 		BrowserAnimationsModule,
 		BrowserModule,
+		AngularFireModule.initializeApp(environment.firebase, "WGCR"),
+		AngularFireAuthModule,
 		AppRoutingModule,
 		HttpClientModule,
 		environment.isMockEnabled ? HttpClientInMemoryWebApiModule.forRoot(FakeApiService, {

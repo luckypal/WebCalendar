@@ -1,5 +1,7 @@
 <kt-portlet [class]="'kt-portlet--height-fluid'">
-	<kt-portlet-header [title]="monthService.monthNames [month]"></kt-portlet-header>
+	<div class="month-header" [ngStyle]="getMonthContainerStyle()">
+		<h3 [ngStyle]="getMonthTextStyle()">{{monthService.monthNames [month]}}</h3>
+	</div>
 	<kt-portlet-body>
 		<div class="kt-widget4">
 			<ng-container *ngFor="let item of calendarService.dayData [month]; let i = index">

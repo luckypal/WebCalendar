@@ -1,10 +1,12 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { CalendarService } from './calendar.service';
 import { ActivityService } from './activity.service';
+import { UiService } from './ui.service';
 
 export class History {
   calendar: string;
   activity: string;
+  ui: string;
 }
 
 @Injectable({
@@ -18,15 +20,24 @@ export class HistoryService {
 
   constructor(
     private calendarService: CalendarService,
-    private activityService: ActivityService
+    private activityService: ActivityService,
+    private uiService: UiService
   ) { }
+
+  reset() {
+    this.index = -1;
+    this.histories = [];
+    this.pushHistory();
+  }
 
   pushHistory() {
     var calendar = this.calendarService.getData();
     var activity = this.activityService.getData();
+    var ui = this.uiService.getData();
     var data = {
       calendar: JSON.stringify(calendar),
-      activity: JSON.stringify(activity)
+      activity: JSON.stringify(activity),
+      ui: JSON.stringify(ui)
     };
 
     this.index++;
@@ -39,9 +50,10 @@ export class HistoryService {
     if (!this.isAbleToBack()) return;
 
     this.index--;
-    var { calendar, activity } = this.histories[this.index];
+    var { calendar, activity, ui } = this.histories[this.index];
     this.calendarService.setData(JSON.parse(calendar));
     this.activityService.setData(JSON.parse(activity));
+    this.uiService.setData(JSON.parse(ui));
     this.changeEvent.emit(true);
   }
 
@@ -49,9 +61,10 @@ export class HistoryService {
     if (!this.isAbleToForward()) return;
     
     this.index++;
-    var { calendar, activity } = this.histories[this.index];
+    var { calendar, activity, ui } = this.histories[this.index];
     this.calendarService.setData(JSON.parse(calendar));
     this.activityService.setData(JSON.parse(activity));
+    this.uiService.setData(JSON.parse(ui));
     this.changeEvent.emit(true);
   }
 

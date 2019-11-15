@@ -21,16 +21,24 @@
 	</kt-portlet-body>
 
 	<kt-portlet-body [class]="'kt-portlet__body--fit'" *ngIf="calendarService.pageViewMode == 0" id="main-print-view">
+		<div class="row">
+			<div class="col-12" >
+				<div [ngStyle]="getBackgroundStyle()">
+					<h2 [ngStyle]="getTitleStyle()">{{uiService.title.title}}</h2>
+				</div>
+			</div>
+		</div>
 		<div class="row row-no-padding row-col-separator-xl">
-			<div class="col-4 col-xl-2 col-md-3 col-lg-2" *ngFor="let monthName of monthService.monthNames; let i = index">
+			<div class="col-4 col-xl-2 col-md-3 col-lg-2 col-month" *ngFor="let monthName of monthService.monthNames; let i = index" [ngStyle]="getMonthColStyle()">
 				<kt-widget_month [month]="i"></kt-widget_month>
 			</div>
 		</div>
+
 	</kt-portlet-body>
 
 	<kt-portlet-body [class]="'kt-portlet__body--fit'" *ngIf="calendarService.pageViewMode >= 1" id="main-print-view-0">
 		<div class="row row-no-padding row-col-separator-xl">
-			<div class="col-4 col-xl-2 col-md-3 col-lg-2" *ngFor="let monthName of monthService.monthNames; let i = index">
+			<div class="col-4 col-xl-2 col-md-3 col-lg-2" *ngFor="let monthName of monthService.monthNames; let i = index" [ngStyle]="getMonthColStyle()">
 				<kt-widget_month [month]="i" *ngIf="i < 6"></kt-widget_month>
 			</div>
 		</div>
@@ -40,7 +48,7 @@
 
 	<kt-portlet-body [class]="'kt-portlet__body--fit'" *ngIf="calendarService.pageViewMode >= 1" id="main-print-view-1">
 		<div class="row row-no-padding row-col-separator-xl">
-			<div class="col-4 col-xl-2 col-md-3 col-lg-2" *ngFor="let monthName of monthService.monthNames; let i = index">
+			<div class="col-4 col-xl-2 col-md-3 col-lg-2 col-month" *ngFor="let monthName of monthService.monthNames; let i = index" [ngStyle]="getMonthColStyle()">
 				<kt-widget_month [month]="i" *ngIf="i >= 6"></kt-widget_month>
 			</div>
 		</div>

@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { MatButtonModule, MatProgressBarModule, MatTabsModule, MatTooltipModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatCommonModule, MatDialogModule, MatIconModule, MatSelectModule, MatSlideToggleModule, MatCheckboxModule, MatChipsModule } from '@angular/material';
+import { MatButtonModule, MatProgressBarModule, MatTabsModule, MatTooltipModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatCommonModule, MatDialogModule, MatIconModule, MatSelectModule, MatSlideToggleModule, MatCheckboxModule, MatChipsModule, MatListModule, MatSliderModule, } from '@angular/material';
 // NgBootstrap
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // Translation
@@ -42,12 +42,14 @@ import { ActivityConfComponent } from './modal/activity-conf/activity-conf.compo
 import { EditDayActivityComponent } from './modal/edit-day-activity/edit-day-activity.component';
 import { WidgetActivityIconModule } from '../../partials/content/widgets/widget-activity-icon/widget-activity-icon.module';
 import { PublishModalComponent } from './modal/publish-modal/publish-modal.component';
+import { SaveModalComponent } from './modal/save-modal/save-modal.component';
 
 @NgModule({
 	entryComponents: [
 		ActivityConfComponent,
 		AddActivityComponent,
-		PublishModalComponent
+		PublishModalComponent,
+		SaveModalComponent,
 	],
 	declarations: [
 		BaseComponent,
@@ -79,6 +81,8 @@ import { PublishModalComponent } from './modal/publish-modal/publish-modal.compo
 		EditDayActivityComponent,
 
 		PublishModalComponent,
+
+		SaveModalComponent,
 	],
 	exports: [
 		BaseComponent,
@@ -128,12 +132,14 @@ import { PublishModalComponent } from './modal/publish-modal/publish-modal.compo
 		MatFormFieldModule,
 		MatIconModule,
 		MatInputModule,
+		MatListModule,
 		MatSelectModule,
 		MatSlideToggleModule,
 		MatProgressBarModule,
 		MatTabsModule,
 		MatButtonModule,
 		MatTooltipModule,
+		MatSliderModule,
 		TranslateModule.forChild(),
 		LoadingBarModule,
 		NgxDaterangepickerMd,

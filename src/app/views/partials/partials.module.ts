@@ -23,7 +23,10 @@ import {
 	MatSortModule,
 	MatTableModule,
 	MatTabsModule,
-	MatTooltipModule
+	MatTooltipModule,
+	MatSlideToggleModule,
+	MatSliderModule,
+	MatChipsModule
 } from '@angular/material';
 // NgBootstrap
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -63,8 +66,21 @@ import { WidgetModule } from './content/widgets/widget.module';
 // SVG inline
 import { InlineSVGModule } from 'ng-inline-svg';
 import { CartComponent } from './layout/topbar/cart/cart.component';
+import { MonthViewComponent } from '../themes/default/modal/month-view/month-view.component';
+import { DayModalComponent } from '../themes/default/modal/day-modal/day-modal.component';
+import { ActivityUIModalComponent } from '../themes/default/modal/activity-uimodal/activity-uimodal.component';
+import { BackgroundUIModalComponent } from '../themes/default/modal/background-uimodal/background-uimodal.component';
+import { TitleDisplayModalComponent } from '../themes/default/modal/title-display-modal/title-display-modal.component';
+import { WidgetActivityIconModule } from './content/widgets/widget-activity-icon/widget-activity-icon.module';
 
 @NgModule({
+	entryComponents: [
+		MonthViewComponent,
+		DayModalComponent,
+		ActivityUIModalComponent,
+		BackgroundUIModalComponent,
+		TitleDisplayModalComponent,
+	],
 	declarations: [
 		ScrollTopComponent,
 		NoticeComponent,
@@ -95,6 +111,11 @@ import { CartComponent } from './layout/topbar/cart/cart.component';
 		CartComponent,
 
 		ErrorComponent,
+		MonthViewComponent,
+		DayModalComponent,
+		ActivityUIModalComponent,
+		BackgroundUIModalComponent,
+		TitleDisplayModalComponent,
 	],
 	exports: [
 		WidgetModule,
@@ -147,9 +168,12 @@ import { CartComponent } from './layout/topbar/cart/cart.component';
 		MatInputModule,
 		MatTableModule,
 		MatAutocompleteModule,
+		MatChipsModule,
 		MatRadioModule,
 		MatIconModule,
 		MatNativeDateModule,
+		MatSlideToggleModule,
+		MatSliderModule,
 		MatProgressBarModule,
 		MatDatepickerModule,
 		MatCardModule,
@@ -161,6 +185,7 @@ import { CartComponent } from './layout/topbar/cart/cart.component';
 		MatTabsModule,
 		MatTooltipModule,
 		MatDialogModule,
+		WidgetActivityIconModule
 	]
 })
 export class PartialsModule {

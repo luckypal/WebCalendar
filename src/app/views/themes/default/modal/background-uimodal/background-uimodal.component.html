@@ -1,0 +1,22 @@
+<div class="modal-header">
+  <h4 class="modal-title">Gestion des évenements</h4>
+  <button type="button" class="close" aria-label="Close" (click)="onClose()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+      <div class="col-12">
+        <input type="file" [(ngModel)]="backgroundFile" (change)="updateBackgroundFile($event)">
+      </div>
+      <div class="col-12">
+        <label>
+          Top Header Height:
+        </label>
+        <mat-slider class="col-6" [(ngModel)]="uiService.background.topHeaderHeight" (change)="updateUI()" min="0" max="400"
+          step="1">
+        </mat-slider>
+      </div>
+  </div>
+  
+</div>

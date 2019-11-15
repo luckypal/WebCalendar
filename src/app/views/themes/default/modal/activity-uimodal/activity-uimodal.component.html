@@ -1,0 +1,40 @@
+<div class="modal-header">
+  <h4 class="modal-title">Activity View</h4>
+  <button type="button" class="close" aria-label="Close" (click)="onClose()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-12">
+      <label>Position of the events:</label>
+      <mat-slider class="col-6" [(ngModel)]="uiService.activity.positionOfAll" (change)="updateUI()" min="0" max="100"
+        step="1" [disabled]="uiService.activity.isPosSeparate">
+      </mat-slider>
+    </div>
+
+    <div class="col-12">
+      <hr />
+    </div>
+
+    <mat-slide-toggle class="col-12" [(ngModel)]="uiService.activity.isPosSeparate" (change)="updateUI()">
+      Position the events separately
+    </mat-slide-toggle>
+
+
+    <div class="col-12" *ngFor="let item of activityService.getActiveConfigs(); let actIndex = index">
+      <label>
+        Position of activity #{{item.index + 1}}:
+        <kt-widget-activity-icon [activityIndex]="item.index"></kt-widget-activity-icon>
+      </label>
+      <mat-slider class="col-6" [(ngModel)]="uiService.activity.positions [item.index]" (change)="updateUI()" min="0" max="100"
+        step="1" [disabled]="!uiService.activity.isPosSeparate">
+      </mat-slider>
+    </div>
+
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" (click)="onReset()">Reset</button>
+  <!-- <button type="button" class="btn btn-primary" (click)="onCenterCalendar()">Center the calendar</button> -->
+</div>
