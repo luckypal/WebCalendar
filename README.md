@@ -19,6 +19,10 @@ Generate custom schedule calendar on Web
 1. Database: Mysql
 2. Server: PHP
 
+## Donate
+0xc2dfA1C7aeE279Bb596FEFD665B53c8D7d918532 
+Thank you!
+
 ## License
 
 ```
