@@ -20,7 +20,8 @@ Generate custom schedule calendar on Web
 2. Server: PHP
 
 ## Donate
-0xc2dfA1C7aeE279Bb596FEFD665B53c8D7d918532 
+0xc2dfA1C7aeE279Bb596FEFD665B53c8D7d918532 (BSC Network - BEP-20)
+
 Thank you!
 
 ## License
